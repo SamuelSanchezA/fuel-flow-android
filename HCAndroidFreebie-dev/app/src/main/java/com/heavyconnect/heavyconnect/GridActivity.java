@@ -20,6 +20,8 @@ public class GridActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout mSettings;
     private LinearLayout mExit;
 
+    private LinearLayout mUnlock;
+
     private User mUser;
 
     @Override
@@ -45,6 +47,9 @@ public class GridActivity extends AppCompatActivity implements View.OnClickListe
         mExit = (LinearLayout) findViewById(R.id.grid_exit);
         mExit.setOnClickListener(this);
 
+        mUnlock = (LinearLayout) findViewById(R.id.grid_lock);
+        mUnlock.setOnClickListener(this);
+
         if(mUser.isEmployee()){
             mSettings.setVisibility(View.GONE);
         }else{
@@ -66,6 +71,9 @@ public class GridActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.grid_exit: // Logout
                 logout();
+                break;
+            case R.id.grid_lock:
+                startActivity(new Intent(this,UnlockActivity.class));
                 break;
         }
     }
