@@ -12,7 +12,6 @@
         android:id="@+id/textEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Search for Bluetooth Module"
         android:textColor="#009688"
         android:textSize="25sp" />
 
@@ -21,33 +20,33 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textEdit"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/textEdit" >
+        android:layout_below="@+id/textEdit"
+        android:layout_marginTop="50dp">
 
         <Button
             android:id="@+id/btnOn"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="90dp"
             android:layout_weight="0.50"
             android:onClick="ledOn"
-            android:text="LED ON" />
+            android:text="Unlock"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:background="#66CD00"
+            android:layout_marginRight="50dp"/>
 
         <Button
             android:id="@+id/btnOff"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="90dp"
             android:layout_weight="0.50"
             android:onClick="ledOff"
-            android:text="LED OFF" />
+            android:textSize="24sp"
+            android:textColor="@color/white"
+            android:background="#EE0000"
+            android:text="Lock" />
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:text="This application is for use with Arduino and JY-MCU Module."
-        android:textColor="#009688" />
 
 </RelativeLayout>

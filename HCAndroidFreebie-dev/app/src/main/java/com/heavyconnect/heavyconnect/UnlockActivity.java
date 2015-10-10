@@ -56,7 +56,7 @@ public class UnlockActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_unlock);
 //        MenuInflater inflater = getMenuInflater();
 //        inflater.inflate(R.menu.option_menu,menu);
 
@@ -87,13 +87,13 @@ public class UnlockActivity extends AppCompatActivity{
 
     public void ledOn(View v){
         sendData("1");
-        Toast msg = Toast.makeText(getBaseContext(), "LED is ON", Toast.LENGTH_SHORT);
+        Toast msg = Toast.makeText(getBaseContext(), "Tractor Unlocked", Toast.LENGTH_SHORT);
         msg.show();
     }
 
     public void ledOff(View v){
         sendData("0");
-        Toast msg = Toast.makeText(getBaseContext(), "LED is OFF", Toast.LENGTH_SHORT);
+        Toast msg = Toast.makeText(getBaseContext(), "Tractor Locked", Toast.LENGTH_SHORT);
         msg.show();
     }
 
