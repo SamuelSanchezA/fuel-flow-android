@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -52,7 +53,7 @@ public class UnlockActivity extends Activity{
     private static String address = "00:00:00:00:00:00";
 
 
-    protected void onCreate(Bundle savedInstanceState, Menu menu) {
+    protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -200,7 +201,7 @@ public class UnlockActivity extends Activity{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.option_menu, menu);
+        inflater.inflate(R.menu.searchmenu, menu);
         return true;
     }
     @Override
