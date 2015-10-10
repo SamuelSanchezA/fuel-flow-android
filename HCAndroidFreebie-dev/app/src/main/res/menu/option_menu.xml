@@ -10,9 +10,15 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/secure_connect_scan"
         android:icon="@android:drawable/ic_menu_search"
         android:title="@string/secure_connect"></item>
         <!--android:showAsAction="ifRoom|withText" />-->
+    <item android:id="@+id/blueConnect"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="@string/secure_connect"
+        app:showAsAction="ifRoom|withText" ></item>
 </menu>
+

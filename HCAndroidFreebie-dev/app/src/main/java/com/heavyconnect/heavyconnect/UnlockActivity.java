@@ -52,10 +52,12 @@ public class UnlockActivity extends Activity{
     private static String address = "00:00:00:00:00:00";
 
 
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState, Menu menu) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.option_menu,menu);
 
         btnOn = (Button) findViewById(R.id.btnOn);
         btnOff = (Button) findViewById(R.id.btnOff);
