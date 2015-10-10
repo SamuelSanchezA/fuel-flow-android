@@ -31,7 +31,7 @@ import java.util.UUID;
 /**
  * Created by Jose Diaz on 10/3/2015.
  */
-public class UnlockActivity extends Activity{
+public class UnlockActivity extends AppCompatActivity{
     private static final String TAG = "LEDOnOff";
 
     Button btnOn, btnOff;
@@ -201,7 +201,8 @@ public class UnlockActivity extends Activity{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.searchmenu, menu);
+        inflater.inflate(R.menu.option_menu, menu);
+        System.out.println("MENU");
         return true;
     }
     @Override

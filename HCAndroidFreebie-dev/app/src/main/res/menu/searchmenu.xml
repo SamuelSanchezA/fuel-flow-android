@@ -5,4 +5,5 @@
         android:icon="@android:drawable/ic_menu_search"
         android:title="@string/secure_connect"
         android:showAsAction="ifRoom|withText" />
+
 </menu>
