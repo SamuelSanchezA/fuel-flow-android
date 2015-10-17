@@ -72,17 +72,6 @@ public class UnlockActivity extends AppCompatActivity{
         checkBTState();
 
         Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
-
-//    if (pairedDevices.size() > 0) {
-//       for (BluetoothDevice device : pairedDevices) {
-//
-//        String deviceBTName = device.getName();
-//        text.setText(text.getText() + " Device: " + deviceBTName);
-//        if (deviceBTName.equals("HC-06")){
-//        	address = device.getAddress();
-//        }
-//       }
-//   }
     }
 
     public void ledOn(View v){
@@ -201,7 +190,7 @@ public class UnlockActivity extends AppCompatActivity{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.option_menu, menu);
+        inflater.inflate(R.menu.searchmenu, menu);
         System.out.println("MENU");
         return true;
     }
