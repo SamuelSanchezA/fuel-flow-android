@@ -95,6 +95,73 @@
                 android:orientation="vertical"
                 android:gravity="center"
                 android:padding="4dp"
+                android:id="@+id/grid_lock"
+                android:layout_marginLeft="16dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/lock"
+                    android:padding="8dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/grid_lock"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp"
+                    android:singleLine="true"
+                    android:textAppearance="@style/SectionText"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Fuel Consumption"
+                android:clickable="true"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="4dp"
+                android:id="@+id/grid_consumption"
+                android:layout_marginLeft="16dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/fuel_gauge"
+                    android:padding="8dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fuel_consumption"
+                    android:gravity="center"
+                    android:layout_marginTop="4dp"
+                    android:singleLine="true"
+                    android:textAppearance="@style/SectionText"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:padding="4dp"
                 android:id="@+id/grid_settings">
 
                 <ImageView
@@ -145,43 +212,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:layout_marginTop="16dp">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="4dp"
-                android:id="@+id/grid_lock"
-                android:layout_marginLeft="16dp">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/lock"
-                    android:padding="8dp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/grid_lock"
-                    android:gravity="center"
-                    android:layout_marginTop="4dp"
-                    android:singleLine="true"
-                    android:textAppearance="@style/SectionText"/>
-            </LinearLayout>
-
-        </LinearLayout>
     </LinearLayout>
 
     <ImageView
