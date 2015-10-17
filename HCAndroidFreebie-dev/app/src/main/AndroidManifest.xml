@@ -86,7 +86,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
             />
-        <activity android:name=".SearchConnectActivity"
+        <activity android:name=".searchConnectActivity"
             android:label="@string/grid_lock"
             android:parentActivityName=".GridActivity">
         <intent-filter>

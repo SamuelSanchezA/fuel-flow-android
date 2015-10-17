@@ -73,7 +73,7 @@ public class GridActivity extends AppCompatActivity implements View.OnClickListe
                 logout();
                 break;
             case R.id.grid_lock:
-                startActivity(new Intent(this, SearchConnectActivity.class));
+                startActivity(new Intent(this, searchConnectActivity.class));
                 break;
         }
     }
