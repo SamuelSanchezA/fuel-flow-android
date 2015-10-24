@@ -89,7 +89,8 @@
 
         <activity android:name=".FuelFlowActivity"
             android:label="@string/select_device"
-            android:configChanges="orientation|keyboardHidden" />
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
 
         <activity android:name=".searchConnectActivity"
             android:label="@string/grid_lock"
@@ -104,7 +105,8 @@
         <activity android:name=".DeviceListActivity"
             android:label="@string/select_device"
             android:theme="@android:style/Theme.Holo.Light.Dialog"
-            android:configChanges="orientation|keyboardHidden" />
+            android:configChanges="orientation|keyboardHidden"
+            />
 
     </application>
 
