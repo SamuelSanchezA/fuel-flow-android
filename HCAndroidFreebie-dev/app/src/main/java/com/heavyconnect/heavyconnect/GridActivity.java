@@ -23,6 +23,7 @@ public class GridActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout mUnlock;
 
     private User mUser;
+    private LinearLayout mFuelFlow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,10 @@ public class GridActivity extends AppCompatActivity implements View.OnClickListe
         mUnlock = (LinearLayout) findViewById(R.id.grid_lock);
         mUnlock.setOnClickListener(this);
 
+        mFuelFlow = (LinearLayout) findViewById(R.id.grid_consumption);
+        mFuelFlow.setOnClickListener(this);
+
+
         if(mUser.isEmployee()){
             mSettings.setVisibility(View.GONE);
         }else{
@@ -75,7 +80,10 @@ public class GridActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.grid_lock:
                 startActivity(new Intent(this, searchConnectActivity.class));
                 break;
-            
+            case R.id.grid_consumption:
+                startActivity(new Intent(this, FuelFlowActivity.class));
+                break;
+
         }
     }
 
