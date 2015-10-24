@@ -8,8 +8,9 @@
     tools:context=".FuelFlowActivity">
 
     <ImageButton
-        android:layout_width="124dp"
-        android:layout_height="wrap_content"
+        android:layout_width="39dp"
+        android:layout_height="60dp"
         android:id="@+id/imageButton"
-        android:src="@drawable/bluetooth"/>
+        android:src="@drawable/bluetooth_smaller" />
+
 </LinearLayout>
