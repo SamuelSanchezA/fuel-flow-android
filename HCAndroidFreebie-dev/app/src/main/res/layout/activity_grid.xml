@@ -104,14 +104,15 @@
                     android:layout_weight="1"
                     android:src="@drawable/lock"
                     android:padding="8dp"
-                    android:layout_marginRight="13dp"/> /*this is used to get the image to be almost aligned */
-                
+                    android:layout_marginRight="13dp"
+                    />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/grid_lock"
                     android:gravity="center"
                     android:layout_marginTop="4dp"
+                    android:layout_marginRight="10dp"
                     android:singleLine="true"
                     android:textAppearance="@style/SectionText"/>
             </LinearLayout>
