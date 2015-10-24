@@ -29,6 +29,12 @@ public class Equipment implements Serializable {
     private double longitude;
     private double latitude;
 
+    private boolean changed = false;
+
+    private String last_modification;
+
+    private String bluetooth_address;
+
     public Equipment(){}
 
     public Equipment(String name, int status){
@@ -107,4 +113,25 @@ public class Equipment implements Serializable {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
+
+    public String getLast_modified() { return last_modification; }
+
+    public void setLast_modified(String last_modified) { this.last_modification = last_modified; }
+
+    public boolean getWasChanged(){
+        return changed;
+    }
+
+    public void setWasChanged(boolean changed){
+        this.changed = changed;
+    }
+
+    public String getBluetoothAddress(){
+        return bluetooth_address;
+    }
+
+    public void setBluetoothAddress(String bluetooth_address){
+        this.bluetooth_address = bluetooth_address;
+    }
+
 }
