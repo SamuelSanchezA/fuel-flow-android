@@ -16,12 +16,15 @@ package com.heavyconnect.heavyconnect;
  * limitations under the License.
  */
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 
         import java.util.Set;
+import java.util.UUID;
 
-        import android.app.Activity;
+import android.app.Activity;
         import android.bluetooth.BluetoothAdapter;
         import android.bluetooth.BluetoothDevice;
         import android.content.BroadcastReceiver;
@@ -201,5 +204,20 @@ public class DeviceListActivity extends Activity {
             }
         }
     };
+
+    private void check_if_bluetooth_paired() {
+        BluetoothAdapter Btooth = BluetoothAdapter.getDefaultAdapter();
+
+        if(Btooth == null){
+            new AlertDialog.Builder(this);
+                setTitle("Bluetooth no compatible with phone");
+                //...
+        }
+    }
+    public boolean connect(BluetoothDevice BT, UUID uuid) {
+
+        return true;//not complete
+    }
+
 
 }
