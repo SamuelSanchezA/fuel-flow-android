@@ -77,7 +77,7 @@ public class FuelFlowActivity extends AppCompatActivity {
 //        Log.d("ButtonClicked", "....Enable.....");
 //    }
 
-    public void onClick(Button v) {
+/*    public void onClick(Button v) {
         switch (v.getId()) {
             case R.id.grid_equip: // Equipments
                 startActivity(new Intent(this, EquipmentListActivity.class));
@@ -85,7 +85,9 @@ public class FuelFlowActivity extends AppCompatActivity {
         }
 
         Log.d("Pushed", "It works");
-    }
+       }
+*/
+
 
 }
 
