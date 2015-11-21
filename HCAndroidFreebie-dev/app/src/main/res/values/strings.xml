@@ -208,5 +208,6 @@
     <string name="fuel_consumption">Fuel Consumption</string>
     <string name="fuel_consumption_label">Current Fuel Consumption Rate</string>
     <string name="equipment_selection">Select Equipment</string>
+    <string name="fuel_flow">Fuel Flow</string>
 
 </resources>

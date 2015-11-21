@@ -89,9 +89,10 @@
             />
 
         <activity android:name=".FuelFlowActivity"
-            android:label="@string/select_device"
+            android:label="@string/fuel_flow"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:parentActivityName=".GridActivity"/>
 
         <activity android:name=".searchConnectActivity"
             android:label="@string/grid_lock"
