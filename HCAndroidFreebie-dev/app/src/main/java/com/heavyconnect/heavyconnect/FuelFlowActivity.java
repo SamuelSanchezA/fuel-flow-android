@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -13,8 +14,9 @@ import java.util.UUID;
 
 /**
  * Created by jsanchez-garcia on 10/24/15.
+ * This class represents the Fuel Consumption screen
  */
-public class FuelFlowActivity extends AppCompatActivity {
+public class FuelFlowActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "BluetoothFlowSensor";
 
@@ -42,7 +44,8 @@ public class FuelFlowActivity extends AppCompatActivity {
 
 
         bluetoothimage = (Button) findViewById(R.id.blueButton);
-        //bluetoothimage.setOnClickListener(this);
+        bluetoothimage.setOnClickListener(this);
+
         checkBTState();
 
 
@@ -72,21 +75,12 @@ public class FuelFlowActivity extends AppCompatActivity {
         finish();
     }
 
-//    public void onClick(View view)
-//    {
-//        Log.d("ButtonClicked", "....Enable.....");
-//    }
+    @Override
+    public void onClick(View v) {
 
-/*    public void onClick(Button v) {
-        switch (v.getId()) {
-            case R.id.grid_equip: // Equipments
-                startActivity(new Intent(this, EquipmentListActivity.class));
-                break;
-        }
+        startActivity(new Intent(this, DeviceListActivity.class));
 
-        Log.d("Pushed", "It works");
-       }
-*/
+    }
 
 
 }
