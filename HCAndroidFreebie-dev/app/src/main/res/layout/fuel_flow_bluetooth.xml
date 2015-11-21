@@ -1,22 +1,110 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1"
     tools:context=".FuelFlowActivity">
-b
-    <Button
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:clickable="true"
-        android:background="@drawable/bluetooth_smaller"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="4dp"
-        android:id="@+id/blueButton"
-         >
 
- </Button>
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height= "match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:background="@drawable/bluetooth_smaller"
+                android:gravity="center"
+                android:padding="4dp"
+                android:id="@+id/blueButton">
+            </Button>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/WindowTitle">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@android:style/TextAppearance.Large"
+                    android:text="Tractor Fuel Consumption"
+                    android:textColor="@color/black"
+                    android:id="@+id/textView"
+                    android:gravity="center"
+                    android:layout_gravity="center_horizontal" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="157dp"
+            android:layout_gravity="center_horizontal">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="44sp"
+                    android:text="Tractor ID:"
+                    android:textSize="25sp"
+                    android:textColor="@color/black"
+                    android:id="@+id/textView2" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="50sp"
+                    android:textSize="25sp"
+                    android:text="Tractor Name:"
+                    android:textColor="@color/black"
+                    android:id="@+id/textView3" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:textSize="25sp"
+                    android:text="Tractor Type"
+                    android:textColor="@color/black"
+                    android:id="@+id/textView4" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"></LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="124dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="8.75" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="169dp"
+            android:layout_gravity="center_horizontal" />
+
+
+    </LinearLayout>
+</RelativeLayout>

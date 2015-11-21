@@ -206,5 +206,6 @@
     <string name="discoverable">Make discoverable</string>
     <!--Fuel Consumption -->
     <string name="fuel_consumption">Fuel Consumption</string>
+    <string name="fuel_consumption_label">Current Fuel Consumption Rate</string>
 
 </resources>
