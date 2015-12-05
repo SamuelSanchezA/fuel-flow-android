@@ -161,3 +161,8 @@
 
     </LinearLayout>
 </RelativeLayout>
+
+<!--
+The idea for the sqlite3 database is based on this columns: data ->&<- time, fuel rate, tractor ID.
+This is just in case I loose or don't get to implementing the local database
+-->
