@@ -77,11 +77,7 @@ public class FuelFlowActivity extends AppCompatActivity implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-
         startActivity(new Intent(this, DeviceListActivity.class));
-
     }
-
-
 }
 
