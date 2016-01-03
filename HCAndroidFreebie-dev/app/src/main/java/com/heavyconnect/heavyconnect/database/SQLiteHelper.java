@@ -29,6 +29,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String EQUIPS_COLUMN_LAST_MODIFICATION = "last_modification";
     public static final String EQUIPS_COLUMN_BLUETOOTH_ADDRESS = "bluetooth_address";
 
+    public static final String TABLE_FUEL_FLOW = "Fuel Flow";
+    public static final String EQUIPS_FUEL_FLOW_RATE = "Fuel Flow Rate"; //this will store the tractors fuel rate
+    public static final String EQUIPS_FUEL_FLOW_TOTTAL_CONSUMPTION = "Total Fuel Consumed"; //this is how much fuel the tractor has consumed overall
+
+
 
 
     private final String SQL_CREATE_EQUIPS_ENTRIES =
@@ -49,6 +54,15 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                     EQUIPS_COLUMN_BLUETOOTH_ADDRESS + " TEXT" +
                     "); ";
 
+    private  final String SQL_CREATE_FUEL_FLOW_ENTRIES =
+            "CREATE TABLE " + TABLE_FUEL_FLOW +
+                    "( datetime('now', 'localtime') PRIMARY KEY," +
+                    EQUIPS_COLUMN_ASSET_NUMBER + " INTEGER, " +
+                    EQUIPS_COLUMN_NAME + " TEXT, " +
+                    EQUIPS_COLUMN_HOURS + " INTEGER, " +
+                    EQUIPS_FUEL_FLOW_RATE  + " REAL, " +
+                    EQUIPS_FUEL_FLOW_TOTTAL_CONSUMPTION + " REAL" + " ); ";
+
     /**
      * Constructor method.
      * @param context - The context.
@@ -60,6 +74,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(SQL_CREATE_EQUIPS_ENTRIES);
+        sqLiteDatabase.execSQL(SQL_CREATE_FUEL_FLOW_ENTRIES);
     }
 
 
@@ -69,6 +84,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i2) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_EQUIPS);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXIST " + TABLE_FUEL_FLOW);
         onCreate(sqLiteDatabase);
     }
 }
