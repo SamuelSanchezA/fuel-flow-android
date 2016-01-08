@@ -19,6 +19,8 @@ import java.util.UUID;
 public class FuelFlowActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "BluetoothFlowSensor";
+    public static final String FUEL_FLOW_RATE = "fuel flow rate";
+    public static final String TOTAL_FUEL_FLOW = "total fuel flow";
 
     // Intent request codes
     private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
@@ -75,10 +77,14 @@ public class FuelFlowActivity extends AppCompatActivity implements View.OnClickL
         finish();
     }
 
+
     @Override
     public void onClick(View v) {
 
         startActivity(new Intent(this, DeviceListActivity.class));
     }
+
+    public String getFuelFlowRate(){return FUEL_FLOW_RATE;}
+    public String getTotalFuelFlow() {return TOTAL_FUEL_FLOW;}
 }
 

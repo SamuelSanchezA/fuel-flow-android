@@ -6,9 +6,14 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.heavyconnect.heavyconnect.FuelFlowActivity;
 import com.heavyconnect.heavyconnect.entities.Equipment;
 
+import java.net.ConnectException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.logging.SimpleFormatter;
 
 /**
  * This class is the bridge between SQLite database and equipment class requests.
@@ -25,6 +30,9 @@ public class EquipmentDAO {
             SQLiteHelper.EQUIPS_COLUMN_ASSET_NUMBER, SQLiteHelper.EQUIPS_COLUMN_STATUS, SQLiteHelper.EQUIPS_COLUMN_HOURS,
             SQLiteHelper.EQUIPS_COLUMN_LONGITUDE, SQLiteHelper.EQUIPS_COLUMN_LATITUDE, SQLiteHelper.EQUIPS_COLUMN_CHANGED,
             SQLiteHelper.EQUIPS_COLUMN_LAST_MODIFICATION,  SQLiteHelper.EQUIPS_COLUMN_BLUETOOTH_ADDRESS};
+
+    private String[] fuel_flow_columns = { SQLiteHelper.EQUIPS_COLUMN_LCID, SQLiteHelper.TABLE_FUEL_FLOW, SQLiteHelper.EQUIPS_COLUMN_ID,
+            SQLiteHelper.EQUIPS_DATETIME, SQLiteHelper.EQUIPS_FUEL_FLOW_RATE, SQLiteHelper.EQUIPS_FUEL_FLOW_TOTTAL_CONSUMPTION};
 
     /**
      * Constructor method.
@@ -43,7 +51,7 @@ public class EquipmentDAO {
     }
 
     /**
-     * Closes database connection.
+     * Closes database connection.ursor.moveToFirst();
      */
     public void close() {
         dbHelper.close();
@@ -73,7 +81,7 @@ public class EquipmentDAO {
         try {
             long insertId = database.insert(SQLiteHelper.TABLE_EQUIPS, null, values);
             cursor = database.query(SQLiteHelper.TABLE_EQUIPS,
-                    allColumns, SQLiteHelper.EQUIPS_COLUMN_LCID + " = " + insertId, null,
+                   allColumns, SQLiteHelper.EQUIPS_COLUMN_LCID + " = " + insertId, null,
                     null, null, null);
             cursor.moveToFirst();
             return cursorToEquipment(cursor);
@@ -87,10 +95,93 @@ public class EquipmentDAO {
     }
 
     /**
+     * stores the fuel-flow information of an equipment into the fuel flow table in the database
+     * @param values
+     * @return ContentValues
+     */
+
+    //when it comes to the ContentValues object, we are assuming that it contains the equipment
+    //  information, fuel_flow_rate and total_fuel_consumption. Within this code, only the
+    //  date and time will be inserted into it
+    public ContentValues put_fuel_flow (ContentValues values)
+    {
+        /*
+        this will be used when parsing the code of information
+         */
+       // content.getAsInteger(SQLiteHelper.EQUIPS_COLUMN_ID);
+       // content.getAsDouble(FuelFlowActivity.FUEL_FLOW_RATE);
+        //content.getAsDouble(FuelFlowActivity.TOTAL_FUEL_FLOW);
+
+        /**
+         * get the current date information from the phone itself in the yyyy-mm-dd HH:mm:ss format
+         * example: 2012-03-13 12:32:12
+         *
+         */
+
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = df.format(c.getTime());
+
+        values.put(SQLiteHelper.EQUIPS_DATETIME, formattedDate);
+
+        /*
+        Now we will be putting in the information from the values object into the database
+         */
+        Cursor cursor = null;
+        try
+        {
+            long insertID = database.insert(SQLiteHelper.TABLE_FUEL_FLOW, null, values);
+            cursor = database.query(SQLiteHelper.TABLE_FUEL_FLOW, fuel_flow_columns,
+                    SQLiteHelper.EQUIPS_COLUMN_LCID + " = " + insertID, null, null, null, null);
+            cursor.moveToFirst();
+            return cursorToContentValues(cursor);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+        finally {
+            if(cursor != null)
+                cursor.close();
+        }
+    }
+
+    /**
+     *  This function will return the row of information for when the it had the highest
+     *  fuel flow rate from the table that corresponds to the appropriate ID passed in
+     */
+
+    public ContentValues getMaxFuelFlowRate(int ID)
+    {
+        Cursor cursor = database.rawQuery("select * from " + SQLiteHelper.TABLE_FUEL_FLOW +
+                " where "  + SQLiteHelper.EQUIPS_COLUMN_ID + " = " + ID + " order by " +
+                SQLiteHelper.EQUIPS_FUEL_FLOW_RATE + " DESC limit 1; ", null);
+        cursor.moveToFirst();
+        return cursorToContentValues(cursor);
+    }
+
+    /**
+     * What this function will due will be to return the row information for when the data
+     * showed the lowest fuel flow rate from the table that corresponds to the appropriate ID
+     * being passed in
+     */
+
+    public ContentValues getMinFuelFlowRate(int ID)
+    {
+        Cursor cursor = database.rawQuery("select * from " + SQLiteHelper.TABLE_FUEL_FLOW
+                    + " where " + SQLiteHelper.EQUIPS_COLUMN_ID + " = " + ID + " order by " +
+                    SQLiteHelper.EQUIPS_FUEL_FLOW_RATE + " limit 1;", null);
+        cursor.moveToFirst();
+        return cursorToContentValues(cursor);
+    }
+
+    /**
      * Finds an equipment in database.
      * @param id - Equipment name.
      * @return - Stored equipment.
      */
+
     public Equipment find(int id){
         Cursor cursor = null;
         try {
@@ -136,7 +227,6 @@ public class EquipmentDAO {
         cursor.close();
         return result;
     }
-
 
     /**
      * Gets all changed equipments stored in database.
@@ -190,6 +280,22 @@ public class EquipmentDAO {
         result.setLast_modified(cursor.getString(11));
 
         return result;
+    }
+
+    /**
+     *  This function will convert a cursor pointer information into a content that will then be
+     *  returned back to where it was called.
+     * @param cursor
+     * @return content
+     */
+    private ContentValues cursorToContentValues(Cursor cursor) {
+        ContentValues content = new ContentValues();
+        content.put(SQLiteHelper.EQUIPS_COLUMN_ID, cursor.getInt(1));
+        content.put(SQLiteHelper.EQUIPS_DATETIME, cursor.getString(2));
+        content.put(SQLiteHelper.EQUIPS_FUEL_FLOW_RATE, cursor.getDouble(3));
+        content.put(SQLiteHelper.EQUIPS_FUEL_FLOW_TOTTAL_CONSUMPTION, cursor.getDouble(4));
+
+        return content;
     }
 
     /**

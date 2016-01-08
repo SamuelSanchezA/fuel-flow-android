@@ -30,8 +30,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String EQUIPS_COLUMN_BLUETOOTH_ADDRESS = "bluetooth_address";
 
     public static final String TABLE_FUEL_FLOW = "Fuel Flow";
-    public static final String EQUIPS_FUEL_FLOW_RATE = "Fuel Flow Rate"; //this will store the tractors fuel rate
-    public static final String EQUIPS_FUEL_FLOW_TOTTAL_CONSUMPTION = "Total Fuel Consumed"; //this is how much fuel the tractor has consumed overall
+    public static final String EQUIPS_DATETIME = "Datetime";    //2
+    public static final String EQUIPS_FUEL_FLOW_RATE = "Fuel Flow Rate"; //this will store the tractors fuel rate //3
+    public static final String EQUIPS_FUEL_FLOW_TOTTAL_CONSUMPTION = "Total Fuel Consumed"; //this is how much fuel the tractor has consumed overall //4
 
 
 
@@ -39,7 +40,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     private final String SQL_CREATE_EQUIPS_ENTRIES =
             "CREATE TABLE " + TABLE_EQUIPS +
                     "( " +
-                    EQUIPS_COLUMN_LCID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    EQUIPS_COLUMN_LCID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +  //similar to the RowID def. in databases
                     EQUIPS_COLUMN_ID + " INTEGER, " +
                     EQUIPS_COLUMN_USER + " INTEGER, " +
                     EQUIPS_COLUMN_NAME + " TEXT, " +
@@ -56,12 +57,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     private  final String SQL_CREATE_FUEL_FLOW_ENTRIES =
             "CREATE TABLE " + TABLE_FUEL_FLOW +
-                    "( datetime('now', 'localtime') PRIMARY KEY," +
-                    EQUIPS_COLUMN_ASSET_NUMBER + " INTEGER, " +
-                    EQUIPS_COLUMN_NAME + " TEXT, " +
-                    EQUIPS_COLUMN_HOURS + " INTEGER, " +
+                    " ( " +
+                    EQUIPS_COLUMN_LCID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    EQUIPS_COLUMN_ID + " INTEGER, " +
+                    EQUIPS_DATETIME + " TEXT, " +
                     EQUIPS_FUEL_FLOW_RATE  + " REAL, " +
                     EQUIPS_FUEL_FLOW_TOTTAL_CONSUMPTION + " REAL" + " ); ";
+
+    //datetime('now', 'localtime') this is what will be used when inputing the date into the table with using SQLite3
 
     /**
      * Constructor method.
