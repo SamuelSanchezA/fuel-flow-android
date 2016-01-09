@@ -1,6 +1,7 @@
 package com.heavyconnect.heavyconnect;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.heavyconnect.heavyconnect.database.EquipmentDAO;
+import com.heavyconnect.heavyconnect.database.SQLiteHelper;
+import com.heavyconnect.heavyconnect.entities.Equipment;
+
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -50,10 +56,11 @@ public class FuelFlowActivity extends AppCompatActivity implements View.OnClickL
 
         checkBTState();
 
+        insertValueIntoDatabase();
 
 
     }
-
+    //
 
     public void checkBTState() {
         // Check for Bluetooth support and then check to make sure it is turned on
@@ -68,6 +75,7 @@ public class FuelFlowActivity extends AppCompatActivity implements View.OnClickL
                 //Prompt user to turn on Bluetooth
                 Intent enableBtIntent = new Intent(btAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+
             }
         }
     }
@@ -84,7 +92,40 @@ public class FuelFlowActivity extends AppCompatActivity implements View.OnClickL
         startActivity(new Intent(this, DeviceListActivity.class));
     }
 
-    public String getFuelFlowRate(){return FUEL_FLOW_RATE;}
-    public String getTotalFuelFlow() {return TOTAL_FUEL_FLOW;}
+    /**
+     * This current function will be used for testing values into the database
+     */
+    public void insertValueIntoDatabase()
+    {
+        double temp_fuel_rate = 20;
+        double temp_total_fuel_consumption = 0;
+        int ID = 1324;
+
+
+
+        ContentValues temp = new ContentValues();
+        for(int i = 0; i < 10.; i++)
+        {
+            temp_fuel_rate += i;
+            temp_total_fuel_consumption++;
+
+            temp.put(SQLiteHelper.EQUIPS_FUEL_FLOW_RATE, temp_fuel_rate);
+            temp.put(SQLiteHelper.EQUIPS_FUEL_FLOW_TOTAL_CONSUMPTION, temp_total_fuel_consumption);
+            temp.put(SQLiteHelper.EQUIPS_COLUMN_ID, ID);
+
+            EquipmentDAO object = new EquipmentDAO(this);
+            temp = object.put_fuel_flow(temp);
+            show_values(temp);
+        }
+    }
+
+    public void show_values(ContentValues temp)
+    {
+        int id = temp.getAsInteger(SQLiteHelper.EQUIPS_COLUMN_ID);
+        double fuel_flow = temp.getAsDouble(SQLiteHelper.EQUIPS_FUEL_FLOW_RATE);
+        double total_consumption = temp.getAsDouble(SQLiteHelper.EQUIPS_FUEL_FLOW_RATE);
+        String date_time = temp.getAsString(SQLiteHelper.EQUIPS_DATETIME);
+
+    }
 }
 

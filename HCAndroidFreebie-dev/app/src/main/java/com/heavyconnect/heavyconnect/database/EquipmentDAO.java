@@ -32,7 +32,7 @@ public class EquipmentDAO {
             SQLiteHelper.EQUIPS_COLUMN_LAST_MODIFICATION,  SQLiteHelper.EQUIPS_COLUMN_BLUETOOTH_ADDRESS};
 
     private String[] fuel_flow_columns = { SQLiteHelper.EQUIPS_COLUMN_LCID, SQLiteHelper.TABLE_FUEL_FLOW, SQLiteHelper.EQUIPS_COLUMN_ID,
-            SQLiteHelper.EQUIPS_DATETIME, SQLiteHelper.EQUIPS_FUEL_FLOW_RATE, SQLiteHelper.EQUIPS_FUEL_FLOW_TOTTAL_CONSUMPTION};
+            SQLiteHelper.EQUIPS_DATETIME, SQLiteHelper.EQUIPS_FUEL_FLOW_RATE, SQLiteHelper.EQUIPS_FUEL_FLOW_TOTAL_CONSUMPTION};
 
     /**
      * Constructor method.
@@ -105,13 +105,6 @@ public class EquipmentDAO {
     //  date and time will be inserted into it
     public ContentValues put_fuel_flow (ContentValues values)
     {
-        /*
-        this will be used when parsing the code of information
-         */
-       // content.getAsInteger(SQLiteHelper.EQUIPS_COLUMN_ID);
-       // content.getAsDouble(FuelFlowActivity.FUEL_FLOW_RATE);
-        //content.getAsDouble(FuelFlowActivity.TOTAL_FUEL_FLOW);
-
         /**
          * get the current date information from the phone itself in the yyyy-mm-dd HH:mm:ss format
          * example: 2012-03-13 12:32:12
@@ -145,6 +138,37 @@ public class EquipmentDAO {
             if(cursor != null)
                 cursor.close();
         }
+    }
+
+    /**
+     * This function will be used for retreiving the average fuel rate for an equipment on
+     * based on the ID that is passed in
+     */
+
+    public Double getAvgFuelFlowRate(int ID)
+    {
+        Cursor cursor = database.rawQuery("select avg(" + SQLiteHelper.EQUIPS_FUEL_FLOW_RATE +
+                ") from " + SQLiteHelper.TABLE_FUEL_FLOW + " where " + SQLiteHelper.EQUIPS_COLUMN_ID +
+                 " = " + ID + ";", null);
+        cursor.moveToFirst();
+        if(cursor.getColumnCount() == 0)
+            return 0.0;     //return a default value to the user back
+        return cursor.getDouble(0); //if it doesn't qualify, then it will return the appropriate values
+    }
+
+    /**
+     * This function will return the last total fuel consumption information that was put into it
+     * based on the ID that was passed in
+     */
+    public Double getTotalFuelConsumption(int ID)
+    {
+        Cursor cursor = database.rawQuery("select max(" + SQLiteHelper.EQUIPS_FUEL_FLOW_TOTAL_CONSUMPTION +
+                ") from " + SQLiteHelper.TABLE_FUEL_FLOW + " where " + SQLiteHelper.EQUIPS_COLUMN_ID +
+                " = " + ID + ";", null);
+        cursor.moveToFirst();
+        if(cursor.getColumnCount() == 0)
+            return 0.0;
+        return cursor.getDouble(0);
     }
 
     /**
@@ -293,8 +317,7 @@ public class EquipmentDAO {
         content.put(SQLiteHelper.EQUIPS_COLUMN_ID, cursor.getInt(1));
         content.put(SQLiteHelper.EQUIPS_DATETIME, cursor.getString(2));
         content.put(SQLiteHelper.EQUIPS_FUEL_FLOW_RATE, cursor.getDouble(3));
-        content.put(SQLiteHelper.EQUIPS_FUEL_FLOW_TOTTAL_CONSUMPTION, cursor.getDouble(4));
-
+        content.put(SQLiteHelper.EQUIPS_FUEL_FLOW_TOTAL_CONSUMPTION, cursor.getDouble(4));
         return content;
     }
 

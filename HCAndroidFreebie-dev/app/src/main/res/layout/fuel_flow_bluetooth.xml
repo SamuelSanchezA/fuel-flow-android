@@ -75,7 +75,8 @@
                         android:padding="15sp"
                         android:textSize="25sp"
                         android:text="123"
-                        android:contextClickable="false"/> <!--Thiis should make sure that the line underneath doesn't change color-->
+                        android:contextClickable="false"
+                        android:id="@+id/tractor_name_val" /> <!--Thiis should make sure that the line underneath doesn't change color-->
 
 
                 </LinearLayout>
@@ -101,7 +102,7 @@
                     android:textSize="25sp"
                     android:padding="15sp"
                     android:textColor="@color/black"
-                    />
+                    android:id="@+id/tractor_asset_view" />
             </LinearLayout>
 
             <LinearLayout
@@ -115,7 +116,8 @@
                     android:text="134243"
                     android:editable="false"
                     android:padding="15sp"
-                    android:textSize="25sp"/>
+                    android:textSize="25sp"
+                    android:id="@+id/tractor_asset_val" />
 
             </LinearLayout>
 
@@ -138,7 +140,8 @@
                     android:gravity="center"
                     android:padding="15sp"
                     android:textSize="25sp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black"
+                    android:id="@+id/Engine_Equipment_used_view" />
             </LinearLayout>
 
             <LinearLayout
@@ -154,7 +157,7 @@
                     android:textColor="@color/black"
                     android:gravity="center"
                     android:textSize="25sp"
-                    />
+                    android:id="@+id/Engine_Equipment_used_vals" />
             </LinearLayout>
 
         </LinearLayout>
