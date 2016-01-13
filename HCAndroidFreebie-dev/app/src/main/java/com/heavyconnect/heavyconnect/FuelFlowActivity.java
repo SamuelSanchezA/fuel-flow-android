@@ -105,36 +105,37 @@ public class FuelFlowActivity extends AppCompatActivity implements View.OnClickL
         int ID = 1324;
 
 
-
         ContentValues temp = new ContentValues(3);
         temp.clear();
+
         EquipmentDAO object = new EquipmentDAO(this);
         object.open();
-        object.removeAll();
+        object.removeAll(); //empties out the tables within the database so that we can test the data
+                            //being inserted
 
         for(int i = 0; i < 10.; i++) {
-
             temp_fuel_rate += 2;
             temp_total_fuel_consumption++;
 
+            // we then start putting in the information into the ContentValues object to store them
             temp.put(SQLiteHelper.EQUIPS_FUEL_FLOW_RATE, temp_fuel_rate);
             temp.put(SQLiteHelper.EQUIPS_FUEL_FLOW_TOTAL_CONSUMPTION, temp_total_fuel_consumption);
             temp.put(SQLiteHelper.EQUIPS_COLUMN_ID, ID);
 
             object.put_fuel_flow(temp);
-
+            temp.clear();
         }
-            show_values(object);
 
+        display_values(object);
     }
 
-    public void show_values(EquipmentDAO object)
+    public void display_values(EquipmentDAO object)
     {
-        ContentValues temp = object.getMinFuelFlowRate(1324);
+        ContentValues temp = object.getMaxFuelFlowRate(1324);
         Double avg = object.getAvgFuelFlowRate(1324);
 
         if(temp == null) {
-            errorExit("Error", "error on line 125 in fuelFlowActivy class");
+            errorExit("Error", "The tractor ID provided does not match any ID found within the database");
             return;
         }
 
@@ -157,7 +158,5 @@ public class FuelFlowActivity extends AppCompatActivity implements View.OnClickL
 
         }
 
-
     }
 }
-

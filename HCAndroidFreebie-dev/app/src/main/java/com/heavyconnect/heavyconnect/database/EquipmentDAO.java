@@ -108,7 +108,6 @@ public class EquipmentDAO {
         /**
          * get the current date information from the phone itself in the yyyy-mm-dd HH:mm:ss format
          * example: 2012-03-13 12:32:12
-         *
          */
 
         Calendar c = Calendar.getInstance();
@@ -147,26 +146,29 @@ public class EquipmentDAO {
 
     public Double getAvgFuelFlowRate(int ID)
     {
-        Cursor cursor = database.rawQuery("select round(avg(" + SQLiteHelper.EQUIPS_FUEL_FLOW_RATE + "), 2) from " + SQLiteHelper.TABLE_FUEL_FLOW + " where " + SQLiteHelper.EQUIPS_COLUMN_ID + " = " + ID + ";", null);
-       // Cursor cursor = database.query(SQLiteHelper.TABLE_FUEL_FLOW, fuel_flow_columns, SQLiteHelper.EQUIPS_COLUMN_ID + " = " + ID,null, null, null,null);
-        cursor.moveToFirst();
+        Cursor cursor = database.rawQuery("select round(avg(" + SQLiteHelper.EQUIPS_FUEL_FLOW_RATE +
+                "), 2) from " + SQLiteHelper.TABLE_FUEL_FLOW + " where " +
+                SQLiteHelper.EQUIPS_COLUMN_ID + " = " + ID + ";", null);
 
-        if(cursor.getColumnCount() == 0)
-            return 0.0;     //return a default value to the user back
-        return cursor.getDouble(0); //if it doesn't qualify, then it will return the appropriate values
+        cursor.moveToFirst();
+        if(cursor.getCount() == 0 || cursor.getColumnCount() == 0)  //this means that the cursor is pointing to nothing, or its empty
+            return 0.0;
+        else
+            return cursor.getDouble(0);
     }
 
     /**
      * This function will return the last total fuel consumption information that was put into it
      * based on the ID that was passed in
      */
+
     public Double getTotalFuelConsumption(int ID)
     {
         Cursor cursor = database.rawQuery("select max(" + SQLiteHelper.EQUIPS_FUEL_FLOW_TOTAL_CONSUMPTION +
                 ") from " + SQLiteHelper.TABLE_FUEL_FLOW + " where " + SQLiteHelper.EQUIPS_COLUMN_ID +
                 " = " + ID + ";", null);
         cursor.moveToFirst();
-        if(cursor.getColumnCount() == 0)
+        if(cursor.getColumnCount() == 0 || cursor.getCount() == 0)
             return 0.0;
         return cursor.getDouble(0);
     }
@@ -179,15 +181,15 @@ public class EquipmentDAO {
     public ContentValues getMaxFuelFlowRate(int ID)
     {
         Cursor cursorInfo = database.rawQuery("select * from " + SQLiteHelper.TABLE_FUEL_FLOW +
+                " where " + SQLiteHelper.EQUIPS_COLUMN_ID + " = " + ID +
                 " order by " + SQLiteHelper.EQUIPS_FUEL_FLOW_RATE + " DESC limit 1; ", null);
         cursorInfo.moveToFirst();
         return cursorToContentValues(cursorInfo);
     }
 
     /**
-     * What this function will due will be to return the row information for when the data
-     * showed the lowest fuel flow rate from the table that corresponds to the appropriate ID
-     * being passed in
+     * This function will return the row information for when the data showed the lowest fuel flow
+     * rate from the table that corresponds to the appropriate ID being passed in
      */
 
     public ContentValues getMinFuelFlowRate(int ID)
@@ -195,8 +197,9 @@ public class EquipmentDAO {
         Cursor cursor = database.rawQuery("select * from " + SQLiteHelper.TABLE_FUEL_FLOW
                     + " where " + SQLiteHelper.EQUIPS_COLUMN_ID + " = " + ID + " order by " +
                     SQLiteHelper.EQUIPS_FUEL_FLOW_RATE + " limit 1;", null);
+
         cursor.moveToFirst();
-        if(cursor.getColumnCount() == 0)    //check to see whether the query returned anything back or not
+        if(cursor == null)
             return null;
         else
             return cursorToContentValues(cursor);
@@ -281,6 +284,7 @@ public class EquipmentDAO {
      * @param equip - Equipment with new information and valid id.
      * @return - Stored equipment.
      */
+
     public Equipment update(Equipment equip){
         remove(equip.getId());
         return put(equip);
@@ -314,19 +318,25 @@ public class EquipmentDAO {
      * @param cursor
      * @return content
      */
+
     private ContentValues cursorToContentValues(Cursor cursor) {
         ContentValues content = new ContentValues();
-        content.clear();
-        content.put(SQLiteHelper.EQUIPS_COLUMN_ID, cursor.getInt(1));
-        content.put(SQLiteHelper.EQUIPS_DATETIME, cursor.getString(2));
-        content.put(SQLiteHelper.EQUIPS_FUEL_FLOW_RATE, cursor.getDouble(3));
-        content.put(SQLiteHelper.EQUIPS_FUEL_FLOW_TOTAL_CONSUMPTION, cursor.getDouble(4));
-        return content;
+        if(cursor.getColumnCount() == 0 || cursor.getCount() == 0)  //this will be used to check whether the
+            return null;                                            //cursor passed in contains the appropriate information
+                                                                    //that we want
+        else {  //if it does have the information that we want, then we can work with it
+            content.put(SQLiteHelper.EQUIPS_COLUMN_ID, cursor.getInt(1));
+            content.put(SQLiteHelper.EQUIPS_DATETIME, cursor.getString(2));
+            content.put(SQLiteHelper.EQUIPS_FUEL_FLOW_RATE, cursor.getDouble(3));
+            content.put(SQLiteHelper.EQUIPS_FUEL_FLOW_TOTAL_CONSUMPTION, cursor.getDouble(4));
+            return content;
+        }
     }
 
     /**
      * Clear database.
      */
+
     public void removeAll(){
         database.delete(SQLiteHelper.TABLE_EQUIPS, null, null);
         database.delete(SQLiteHelper.TABLE_FUEL_FLOW, null, null);
@@ -336,6 +346,7 @@ public class EquipmentDAO {
      * Stores all equipments in database.
      * @param equips - Equipments to store.
      */
+
     public void putAll(ArrayList<Equipment> equips){
         if(equips == null)
             return;
