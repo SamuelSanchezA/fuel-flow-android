@@ -4,10 +4,12 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -15,6 +17,7 @@ import com.heavyconnect.heavyconnect.database.EquipmentDAO;
 import com.heavyconnect.heavyconnect.database.SQLiteHelper;
 import com.heavyconnect.heavyconnect.entities.Equipment;
 
+import java.nio.DoubleBuffer;
 import java.util.Random;
 import java.util.UUID;
 
@@ -103,28 +106,57 @@ public class FuelFlowActivity extends AppCompatActivity implements View.OnClickL
 
 
 
-        ContentValues temp = new ContentValues();
-        for(int i = 0; i < 10.; i++)
-        {
-            temp_fuel_rate += i;
+        ContentValues temp = new ContentValues(3);
+        temp.clear();
+        EquipmentDAO object = new EquipmentDAO(this);
+        object.open();
+        object.removeAll();
+
+        for(int i = 0; i < 10.; i++) {
+
+            temp_fuel_rate += 2;
             temp_total_fuel_consumption++;
 
             temp.put(SQLiteHelper.EQUIPS_FUEL_FLOW_RATE, temp_fuel_rate);
             temp.put(SQLiteHelper.EQUIPS_FUEL_FLOW_TOTAL_CONSUMPTION, temp_total_fuel_consumption);
             temp.put(SQLiteHelper.EQUIPS_COLUMN_ID, ID);
 
-            EquipmentDAO object = new EquipmentDAO(this);
-            temp = object.put_fuel_flow(temp);
-            show_values(temp);
+            object.put_fuel_flow(temp);
+
         }
+            show_values(object);
+
     }
 
-    public void show_values(ContentValues temp)
+    public void show_values(EquipmentDAO object)
     {
-        int id = temp.getAsInteger(SQLiteHelper.EQUIPS_COLUMN_ID);
-        double fuel_flow = temp.getAsDouble(SQLiteHelper.EQUIPS_FUEL_FLOW_RATE);
-        double total_consumption = temp.getAsDouble(SQLiteHelper.EQUIPS_FUEL_FLOW_RATE);
-        String date_time = temp.getAsString(SQLiteHelper.EQUIPS_DATETIME);
+        ContentValues temp = object.getMinFuelFlowRate(1324);
+        Double avg = object.getAvgFuelFlowRate(1324);
+
+        if(temp == null) {
+            errorExit("Error", "error on line 125 in fuelFlowActivy class");
+            return;
+        }
+
+        else {
+            int id = temp.getAsInteger(SQLiteHelper.EQUIPS_COLUMN_ID);
+            double fuel_flow = temp.getAsDouble(SQLiteHelper.EQUIPS_FUEL_FLOW_RATE);
+            double total_consumption = temp.getAsDouble(SQLiteHelper.EQUIPS_FUEL_FLOW_TOTAL_CONSUMPTION);
+            String date_time = temp.getAsString(SQLiteHelper.EQUIPS_DATETIME);
+
+            EditText tractor_name, fuel_flow_rate, DateTime;
+
+            tractor_name = (EditText) findViewById(R.id.tractor_name_val);
+            tractor_name.setText(Integer.toString(id) + " and avg: " + avg);
+
+            fuel_flow_rate = (EditText) findViewById(R.id.tractor_asset_val);
+            fuel_flow_rate.setText(fuel_flow + " and " + total_consumption);
+
+            DateTime = (EditText) findViewById(R.id.Engine_Equipment_used_vals);
+            DateTime.setText(date_time);
+
+        }
+
 
     }
 }

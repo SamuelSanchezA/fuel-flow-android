@@ -29,10 +29,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String EQUIPS_COLUMN_LAST_MODIFICATION = "last_modification";
     public static final String EQUIPS_COLUMN_BLUETOOTH_ADDRESS = "bluetooth_address";
 
-    public static final String TABLE_FUEL_FLOW = "Fuel Flow";
-    public static final String EQUIPS_DATETIME = "Datetime";    //2
-    public static final String EQUIPS_FUEL_FLOW_RATE = "Fuel Flow Rate"; //this will store the tractors fuel rate //3
-    public static final String EQUIPS_FUEL_FLOW_TOTAL_CONSUMPTION = "Total Fuel Consumed"; //this is how much fuel the tractor has consumed overall //4
+    public static final String TABLE_FUEL_FLOW = "fuel_flow";
+    public static final String EQUIPS_DATETIME = "datetime";    //2
+    public static final String EQUIPS_FUEL_FLOW_RATE = "fuel_flow_rate"; //this will store the tractors fuel rate //3
+    public static final String EQUIPS_FUEL_FLOW_TOTAL_CONSUMPTION = "total_fuel_consumed"; //this is how much fuel the tractor has consumed overall //4
 
 
 
@@ -62,7 +62,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                     EQUIPS_COLUMN_ID + " INTEGER, " +
                     EQUIPS_DATETIME + " TEXT, " +
                     EQUIPS_FUEL_FLOW_RATE  + " REAL, " +
-                    EQUIPS_FUEL_FLOW_TOTAL_CONSUMPTION + " REAL" + " ); ";
+                    EQUIPS_FUEL_FLOW_TOTAL_CONSUMPTION + " REAL" +
+                    "); ";
 
     //datetime('now', 'localtime') this is what will be used when inputing the date into the table with using SQLite3
 
@@ -87,7 +88,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i2) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_EQUIPS);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXIST " + TABLE_FUEL_FLOW);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_FUEL_FLOW);
         onCreate(sqLiteDatabase);
     }
+
+
 }

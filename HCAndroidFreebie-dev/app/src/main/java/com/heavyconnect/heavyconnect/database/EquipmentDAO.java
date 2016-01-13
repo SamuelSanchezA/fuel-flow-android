@@ -31,7 +31,7 @@ public class EquipmentDAO {
             SQLiteHelper.EQUIPS_COLUMN_LONGITUDE, SQLiteHelper.EQUIPS_COLUMN_LATITUDE, SQLiteHelper.EQUIPS_COLUMN_CHANGED,
             SQLiteHelper.EQUIPS_COLUMN_LAST_MODIFICATION,  SQLiteHelper.EQUIPS_COLUMN_BLUETOOTH_ADDRESS};
 
-    private String[] fuel_flow_columns = { SQLiteHelper.EQUIPS_COLUMN_LCID, SQLiteHelper.TABLE_FUEL_FLOW, SQLiteHelper.EQUIPS_COLUMN_ID,
+    private String[] fuel_flow_columns = { SQLiteHelper.EQUIPS_COLUMN_LCID, SQLiteHelper.EQUIPS_COLUMN_ID,
             SQLiteHelper.EQUIPS_DATETIME, SQLiteHelper.EQUIPS_FUEL_FLOW_RATE, SQLiteHelper.EQUIPS_FUEL_FLOW_TOTAL_CONSUMPTION};
 
     /**
@@ -103,7 +103,7 @@ public class EquipmentDAO {
     //when it comes to the ContentValues object, we are assuming that it contains the equipment
     //  information, fuel_flow_rate and total_fuel_consumption. Within this code, only the
     //  date and time will be inserted into it
-    public ContentValues put_fuel_flow (ContentValues values)
+    public void put_fuel_flow (ContentValues values)
     {
         /**
          * get the current date information from the phone itself in the yyyy-mm-dd HH:mm:ss format
@@ -127,12 +127,12 @@ public class EquipmentDAO {
             cursor = database.query(SQLiteHelper.TABLE_FUEL_FLOW, fuel_flow_columns,
                     SQLiteHelper.EQUIPS_COLUMN_LCID + " = " + insertID, null, null, null, null);
             cursor.moveToFirst();
-            return cursorToContentValues(cursor);
+            return; //cursorToContentValues(cursor);
         }
         catch (Exception e)
         {
             e.printStackTrace();
-            return null;
+            return;
         }
         finally {
             if(cursor != null)
@@ -147,10 +147,10 @@ public class EquipmentDAO {
 
     public Double getAvgFuelFlowRate(int ID)
     {
-        Cursor cursor = database.rawQuery("select avg(" + SQLiteHelper.EQUIPS_FUEL_FLOW_RATE +
-                ") from " + SQLiteHelper.TABLE_FUEL_FLOW + " where " + SQLiteHelper.EQUIPS_COLUMN_ID +
-                 " = " + ID + ";", null);
+        Cursor cursor = database.rawQuery("select round(avg(" + SQLiteHelper.EQUIPS_FUEL_FLOW_RATE + "), 2) from " + SQLiteHelper.TABLE_FUEL_FLOW + " where " + SQLiteHelper.EQUIPS_COLUMN_ID + " = " + ID + ";", null);
+       // Cursor cursor = database.query(SQLiteHelper.TABLE_FUEL_FLOW, fuel_flow_columns, SQLiteHelper.EQUIPS_COLUMN_ID + " = " + ID,null, null, null,null);
         cursor.moveToFirst();
+
         if(cursor.getColumnCount() == 0)
             return 0.0;     //return a default value to the user back
         return cursor.getDouble(0); //if it doesn't qualify, then it will return the appropriate values
@@ -178,11 +178,10 @@ public class EquipmentDAO {
 
     public ContentValues getMaxFuelFlowRate(int ID)
     {
-        Cursor cursor = database.rawQuery("select * from " + SQLiteHelper.TABLE_FUEL_FLOW +
-                " where "  + SQLiteHelper.EQUIPS_COLUMN_ID + " = " + ID + " order by " +
-                SQLiteHelper.EQUIPS_FUEL_FLOW_RATE + " DESC limit 1; ", null);
-        cursor.moveToFirst();
-        return cursorToContentValues(cursor);
+        Cursor cursorInfo = database.rawQuery("select * from " + SQLiteHelper.TABLE_FUEL_FLOW +
+                " order by " + SQLiteHelper.EQUIPS_FUEL_FLOW_RATE + " DESC limit 1; ", null);
+        cursorInfo.moveToFirst();
+        return cursorToContentValues(cursorInfo);
     }
 
     /**
@@ -197,7 +196,10 @@ public class EquipmentDAO {
                     + " where " + SQLiteHelper.EQUIPS_COLUMN_ID + " = " + ID + " order by " +
                     SQLiteHelper.EQUIPS_FUEL_FLOW_RATE + " limit 1;", null);
         cursor.moveToFirst();
-        return cursorToContentValues(cursor);
+        if(cursor.getColumnCount() == 0)    //check to see whether the query returned anything back or not
+            return null;
+        else
+            return cursorToContentValues(cursor);
     }
 
     /**
@@ -300,7 +302,7 @@ public class EquipmentDAO {
         result.setEngineHours(cursor.getInt(7));
         result.setLongitude(cursor.getDouble(8));
         result.setLatitude(cursor.getDouble(9));
-        result.setWasChanged(cursor.getInt(10) == 1? true : false);
+        result.setWasChanged(cursor.getInt(10) == 1 ? true : false);
         result.setLast_modified(cursor.getString(11));
 
         return result;
@@ -314,6 +316,7 @@ public class EquipmentDAO {
      */
     private ContentValues cursorToContentValues(Cursor cursor) {
         ContentValues content = new ContentValues();
+        content.clear();
         content.put(SQLiteHelper.EQUIPS_COLUMN_ID, cursor.getInt(1));
         content.put(SQLiteHelper.EQUIPS_DATETIME, cursor.getString(2));
         content.put(SQLiteHelper.EQUIPS_FUEL_FLOW_RATE, cursor.getDouble(3));
@@ -326,6 +329,7 @@ public class EquipmentDAO {
      */
     public void removeAll(){
         database.delete(SQLiteHelper.TABLE_EQUIPS, null, null);
+        database.delete(SQLiteHelper.TABLE_FUEL_FLOW, null, null);
     }
 
     /**
@@ -343,4 +347,7 @@ public class EquipmentDAO {
             put(eq);
         }
     }
+
+
+
 }
